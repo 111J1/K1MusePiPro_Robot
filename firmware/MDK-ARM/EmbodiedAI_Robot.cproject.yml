@@ -1,0 +1,285 @@
+project:
+  packs:
+    - pack: ARM::CMSIS@^6.1.0
+    - pack: Keil::STM32G4xx_DFP@^2.2.0
+  setups:
+    - setup: Options for EmbodiedAI_Robot
+      processor:
+        fpu: sp
+      add-path:
+        - ../Core/Inc
+        - ../Drivers/STM32G4xx_HAL_Driver/Inc
+        - ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy
+        - ../Drivers/CMSIS/Device/ST/STM32G4xx/Include
+        - ../Drivers/CMSIS/Include
+        - ../Application/Algorithm
+        - ../Application/Driver
+        - ../Application/Device
+        - ../Application/Module
+        - ../Application/Module/SO101ARM
+        - ../Middlewares/Third_Party/FreeRTOS/Source/include
+        - ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+        - ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
+        - ../Application/Task
+      debug: "on"
+      define:
+        - USE_HAL_DRIVER
+        - STM32G474xx
+        - __TARGET_FPU_VFP
+        - __FPU_PRESENT: 1U
+      misc:
+        - C:
+            - -std=c99
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -Wno-packed
+            - -Wno-missing-variable-declarations
+            - -Wno-missing-prototypes
+            - -Wno-missing-noreturn
+            - -Wno-sign-conversion
+            - -Wno-nonportable-include-path
+            - -Wno-reserved-id-macro
+            - -Wno-unused-macros
+            - -Wno-documentation-unknown-command
+            - -Wno-documentation
+            - -Wno-license-management
+            - -Wno-parentheses-equality
+          CPP:
+            - -xc++
+            - -std=c++11
+            - -fno-exceptions
+          ASM:
+            - -masm=auto
+          Link:
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+  linker:
+    - script: stm32g474xx_flash.sct
+  groups:
+    - group: Application/MDK-ARM
+      files:
+        - file: startup_stm32g474xx.s
+    - group: Application/User/Core
+      files:
+        - file: ../Core/Src/main.c
+        - file: ../Core/Src/gpio.c
+        - file: ../Core/Src/app_freertos.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/adc.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/dma.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Core/Src/hrtim.c
+        - file: ../Core/Src/i2c.c
+        - file: ../Core/Src/tim.c
+        - file: ../Core/Src/usart.c
+        - file: ../Core/Src/stm32g4xx_it.c
+        - file: ../Core/Src/stm32g4xx_hal_msp.c
+        - file: ../Core/Src/stm32g4xx_hal_timebase_tim.c
+          misc:
+            - CPP:
+                - -xc++
+    - group: Drivers/STM32G4xx_HAL_Driver
+      files:
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_hrtim.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.c
+        - file: ../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.c
+    - group: Drivers/CMSIS
+      files:
+        - file: ../Core/Src/system_stm32g4xx.c
+    - group: Driver
+      files:
+        - file: ../Application/Driver/drv_brush_motor.c
+        - file: ../Application/Driver/drv_brush_motor.h
+        - file: ../Application/Driver/driver.c
+        - file: ../Application/Driver/driver.h
+        - file: ../Application/Driver/DWT.c
+        - file: ../Application/Driver/DWT.h
+        - file: ../Application/Driver/drv_uart.c
+        - file: ../Application/Driver/drv_uart.h
+        - file: ../Application/Driver/drv_lift_home_sensor.c
+        - file: ../Application/Driver/drv_lift_home_sensor.h
+        - file: ../Application/Driver/drv_gas_sensor.c
+        - file: ../Application/Driver/drv_gas_sensor.h
+        - file: ../Application/Driver/drv_power_voltage.c
+        - file: ../Application/Driver/drv_power_voltage.h
+        - file: ../Application/Driver/drv_sht31.c
+        - file: ../Application/Driver/drv_sht31.h
+    - group: Device
+      files:
+        - file: ../Application/Device/dev_brush_motor.c
+        - file: ../Application/Device/dev_brush_motor.h
+        - file: ../Application/Device/dev_lift_home_sensor.c
+        - file: ../Application/Device/dev_lift_home_sensor.h
+        - file: ../Application/Device/ssd1306.c
+        - file: ../Application/Device/ssd1306.h
+        - file: ../Application/Device/ssd1306_conf.h
+        - file: ../Application/Device/ssd1306_fonts.c
+        - file: ../Application/Device/ssd1306_fonts.h
+        - file: ../Application/Device/dev_sts_servo.c
+        - file: ../Application/Device/dev_sts_servo.h
+        - file: ../Application/Device/dev_sts_servo_config.h
+        - file: ../Application/Device/dev_uart.h
+        - file: ../Application/Device/dev_gas_sensor.c
+        - file: ../Application/Device/dev_gas_sensor.h
+        - file: ../Application/Device/dev_power_voltage.c
+        - file: ../Application/Device/dev_power_voltage.h
+        - file: ../Application/Device/dev_sht31.c
+        - file: ../Application/Device/dev_sht31.h
+    - group: Module
+      files:
+        - file: ../Application/Module/module.c
+        - file: ../Application/Module/module.h
+        - file: ../Application/Module/mdl_chassis.c
+        - file: ../Application/Module/mdl_chassis.h
+        - file: ../Application/Module/mdl_control_arbitration.c
+        - file: ../Application/Module/mdl_control_arbitration.h
+        - file: ../Application/Module/mdl_control_protocol.c
+        - file: ../Application/Module/mdl_control_protocol.h
+        - file: ../Application/Module/SO101ARM/mdl_so101_arm.c
+        - file: ../Application/Module/SO101ARM/mdl_so101_arm.h
+        - file: ../Application/Module/SO101ARM/mdl_so101_arm_config.h
+        - file: ../Application/Module/SO101ARM/so101_algorithm.c
+        - file: ../Application/Module/SO101ARM/so101_algorithm.h
+        - file: ../Application/Module/mdl_lift.c
+        - file: ../Application/Module/mdl_lift.h
+        - file: ../Application/Module/mdl_lift_config.h
+        - file: ../Application/Module/mdl_peripheral.c
+        - file: ../Application/Module/mdl_peripheral.h
+        - file: ../Application/Module/mdl_peripheral_config.h
+    - group: Task
+      files:
+        - file: ../Application/Task/task_arm.c
+        - file: ../Application/Task/task_arm.h
+        - file: ../Application/Task/task_chassis.c
+        - file: ../Application/Task/task_chassis.h
+        - file: ../Application/Task/task_command.c
+        - file: ../Application/Task/task_command.h
+        - file: ../Application/Task/task_demo.c
+        - file: ../Application/Task/task_demo.h
+        - file: ../Application/Task/demo_macro_config.h
+        - file: ../Application/Task/task_lift.c
+        - file: ../Application/Task/task_lift.h
+        - file: ../Application/Task/task_oled.c
+        - file: ../Application/Task/task_oled.h
+        - file: ../Application/Task/task_telemetry.c
+        - file: ../Application/Task/task_telemetry.h
+        - file: ../Application/Task/task_peripheral.c
+        - file: ../Application/Task/task_peripheral.h
+    - group: Algorithm
+      files:
+        - file: ../Application/Algorithm/pid.c
+        - file: ../Application/Algorithm/pid.h
+        - file: ../Application/Algorithm/alg_crc8.c
+        - file: ../Application/Algorithm/alg_crc8.h
+    - group: Middlewares/FreeRTOS
+      misc:
+        - C-CPP:
+            - -Wno-packed
+            - -Wno-missing-variable-declarations
+            - -Wno-missing-prototypes
+            - -Wno-missing-noreturn
+            - -Wno-sign-conversion
+            - -Wno-nonportable-include-path
+            - -Wno-reserved-id-macro
+            - -Wno-unused-macros
+            - -Wno-documentation-unknown-command
+            - -Wno-documentation
+            - -Wno-license-management
+            - -Wno-parentheses-equality
+            - -Wno-covered-switch-default
+            - -Wno-unreachable-code-break
+          CPP:
+            - -xc++
+      files:
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/queue.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/timers.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+          misc:
+            - CPP:
+                - -xc++
+        - file: ../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+          misc:
+            - CPP:
+                - -xc++
+  components:
+    - component: ARM::CMSIS:CORE

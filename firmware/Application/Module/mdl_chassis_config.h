@@ -1,0 +1,17 @@
+#ifndef _MDL_CHASSIS_CONFIG_H
+#define _MDL_CHASSIS_CONFIG_H
+
+#define WHEEL_RADIUS (0.029f) // wheel radius, m
+#define CHASSIS_R (0.268f)    // distance from center to wheel, m
+
+#define CHASSIS_PI (3.14159265358979323846f)
+#define CHASSIS_2PI (6.28318530717958647692f)
+#define INV_SQRT2 (0.70710678118654752440f)
+#define INV_SQRT8 (0.35355339059327376220f)
+#define MAX_CHASSIS_V (1.4f)
+#define MAX_CHASSIS_OMEGA (3.7f)
+#define MAX_WHEEL_RPM (330.f)
+#define CHASSIS_V_DEADZONE (0.01f)
+#define CHASSIS_OMEGA_DEADZONE (0.03f)
+
+#endif /* _MDL_CHASSIS_CONFIG_H_ */

@@ -1,0 +1,3 @@
+bringup:
+  ros__parameters:
+    mode: "mock"

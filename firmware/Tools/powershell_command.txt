@@ -1,0 +1,3 @@
+cd 你当前仓库的绝对路径(如：cd E:\Embed_Game\STM32_prj\EmbodiedAI_Robot\)
+
+powershell -ExecutionPolicy Bypass -File Tools\fix_freertos_ac6_port.ps1

@@ -1,0 +1,10 @@
+std_msgs/Header header
+string trace_id
+uint64 epoch
+uint8 interaction_state
+string interaction_state_name
+bool wakeword_enabled
+bool vision_enabled
+bool vad_asr_enabled
+bool tts_enabled
+string reason

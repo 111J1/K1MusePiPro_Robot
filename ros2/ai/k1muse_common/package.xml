@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>k1muse_common</name>
+  <version>0.1.0</version>
+  <description>Shared K1MUSE interfaces and header-only utilities.</description>
+  <maintainer email="maintainer@example.com">K1MUSE Maintainer</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>rosidl_default_generators</build_depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>builtin_interfaces</depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,83 @@
+# Runtime profile definitions (structured YAML, schema_version=1).
+# Maps the five runtime modes to detector schedules and EP configuration.
+# Loaded by RuntimeProfileManager.
+#
+# See docs/architecture_review/09_ARCHITECTURE_REVIEW_REVISION_2026-06-21.md
+
+schema_version: 1
+
+profiles:
+  NORMAL:
+    description: "YOLO object detection only"
+    vision_parallel_enabled: false
+    vision_ep_profile: "vision_serial_2t"
+    voice_ep_profile: "voice_serial_2t"
+    tts_enabled: true
+    wakeword_enabled: true
+    schedule:
+      - name: "yolov8n"
+        interval_ms: 0
+        priority: 0
+        requires_ep: true
+        enabled: true
+
+  GUARD:
+    description: "Pose + Fire serial switching, alerts enabled"
+    vision_parallel_enabled: false
+    vision_ep_profile: "vision_serial_2t"
+    voice_ep_profile: "voice_serial_2t"
+    tts_enabled: true
+    wakeword_enabled: true
+    schedule:
+      - name: "yolov8n-pose"
+        interval_ms: 0
+        priority: 0
+        requires_ep: true
+        enabled: true
+      - name: "yolov8_fire"
+        interval_ms: 0
+        priority: 0
+        requires_ep: true
+        enabled: true
+
+  PATROL:
+    description: "All detectors"
+    vision_parallel_enabled: false
+    vision_ep_profile: "vision_serial_2t"
+    voice_ep_profile: "voice_serial_2t"
+    tts_enabled: true
+    wakeword_enabled: true
+    schedule:
+      - name: "yolov8n"
+        interval_ms: 0
+        priority: 0
+        requires_ep: true
+        enabled: true
+      - name: "yolov8n-pose"
+        interval_ms: 0
+        priority: 0
+        requires_ep: true
+        enabled: true
+      - name: "yolov8_fire"
+        interval_ms: 0
+        priority: 0
+        requires_ep: true
+        enabled: true
+
+  VOICE_ONLY:
+    description: "All vision disabled, voice only"
+    vision_parallel_enabled: false
+    vision_ep_profile: ""
+    voice_ep_profile: "voice_serial_2t"
+    tts_enabled: true
+    wakeword_enabled: true
+    schedule: []
+
+  STANDBY:
+    description: "Minimal — wakeword only"
+    vision_parallel_enabled: false
+    vision_ep_profile: ""
+    voice_ep_profile: "voice_serial_2t"
+    tts_enabled: false
+    wakeword_enabled: true
+    schedule: []

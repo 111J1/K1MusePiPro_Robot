@@ -1,0 +1,14 @@
+# SetMode.srv
+# 切换运行模式
+
+# 目标模式: NORMAL, GUARD, PATROL, VOICE_ONLY, STANDBY
+string mode
+
+# 切换原因
+string reason
+---
+# 是否成功
+bool success
+
+# 结果消息
+string message

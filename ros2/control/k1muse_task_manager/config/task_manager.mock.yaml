@@ -1,0 +1,5 @@
+# Mock configuration for task_manager_node
+# Used for integration testing and simulation
+/task_manager_node:
+  ros__parameters:
+    default_timeout_ms: 5000

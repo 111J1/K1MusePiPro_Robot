@@ -1,0 +1,21 @@
+# llama-server process configuration
+# Read by robot.real_k1.launch.py — intent_node does NOT parse this file.
+#
+# See PHASE2_LLAMA_INTEGRATION.md §5 for parameter descriptions.
+
+llama_server:
+  process_mode: "managed"       # "managed" (launch starts/stops) or "external" (systemd)
+  binary: "/usr/bin/llama-server"
+  model_path: "/home/bianbu/.cache/models/llm/qwen2.5-0.5b-instruct-q4_0.gguf"
+  host: "127.0.0.1"
+  port: 8080
+  threads: 2                   # Conservative initial value; benchmark 2 vs 4 on board
+  parallel: 1
+  ctx_size: 4096
+  batch_size: 64
+  metrics: true
+  require_notcm: true
+  notcm_path: "/home/bianbu/.local/lib/notcm.so"
+  startup_timeout_ms: 120000
+  restart_limit: 3
+  restart_backoff_ms: 2000

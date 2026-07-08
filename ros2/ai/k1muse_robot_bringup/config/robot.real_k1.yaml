@@ -1,0 +1,4 @@
+bringup:
+  ros__parameters:
+    mode: "real"
+    no_motion: true

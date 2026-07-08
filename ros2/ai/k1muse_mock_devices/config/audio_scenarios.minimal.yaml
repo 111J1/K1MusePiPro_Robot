@@ -1,0 +1,14 @@
+# Minimal audio scenario configuration for k1muse_mock_devices.
+# Use with: ros2 run k1muse_mock_devices audio_scenario_node --ros-args \
+#             --params-file audio_scenarios.minimal.yaml
+
+/**:
+  ros__parameters:
+    # Scenario name: wake_speech | wake_only | speech_only | seq_gap | no_speech
+    scenario: "wake_speech"
+
+    # Publish interval in milliseconds (20ms = real-time for 16kHz/20ms frames)
+    publish_rate_ms: 20
+
+    # Trace identifier attached to every AudioFrame
+    trace_id: "scenario-test"

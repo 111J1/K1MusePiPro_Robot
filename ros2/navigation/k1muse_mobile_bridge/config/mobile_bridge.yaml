@@ -1,0 +1,17 @@
+mobile_bridge_node:
+  ros__parameters:
+    rfcomm_device: "/dev/rfcomm0"
+    map_topic: "/map"
+    cmd_vel_topic: "/cmd_vel"
+    mapping_scripts_dir: "/home/bianbu/k1muse_slam_ros/install/k1muse_slam_nav/lib/k1muse_slam_nav"
+    exploration_scripts_dir: "/home/bianbu/k1muse_slam_ros/install/k1muse_exploration/lib/k1muse_exploration"
+    exploration_path_topic: "/plan"
+    map_library_dir: "/home/bianbu/k1muse_slam_ros/src/k1muse_slam_nav/maps"
+    global_frame: "map"
+    base_frame: "base_footprint"
+    tile_size: 64
+    max_queue_frames: 64
+    map_publish_hz: 1.0
+    pose_publish_hz: 2.0
+    path_publish_hz: 1.0
+    teleop_timeout_ms: 300

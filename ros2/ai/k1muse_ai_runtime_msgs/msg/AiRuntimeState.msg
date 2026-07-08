@@ -1,0 +1,11 @@
+std_msgs/Header header
+string trace_id
+uint64 epoch
+bool runtime_ready
+uint8 lifecycle_state
+string lifecycle_state_name
+string mode
+string active_job
+string active_model
+uint32 queued_jobs
+string last_error

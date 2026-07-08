@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>k1muse_voice_audio</name>
+  <version>0.1.0</version>
+  <description>Voice audio I/O node with playback queue and device abstraction.</description>
+  <maintainer email="maintainer@example.com">K1MUSE Maintainer</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>k1muse_voice_msgs</depend>
+  <depend>k1muse_audio_msgs</depend>
+  <depend>k1muse_common</depend>
+  <depend>lifecycle_msgs</depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

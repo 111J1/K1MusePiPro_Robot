@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>k1muse_description</name>
+  <version>0.1.0</version>
+  <description>
+    URDF/xacro for K1 MUSE Pi Pro X-omni robot.
+    本包只提供 urdf 文件，不带 launch；
+    robot_state_publisher 由 k1muse_slam_nav 的 _sensors.launch.py 直接起。
+  </description>
+  <maintainer email="yjy@example.com">YJY</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>urdf</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

@@ -1,0 +1,5 @@
+reminder_node:
+  ros__parameters:
+    timezone: "Asia/Shanghai"
+    timer_period_sec: 1.0
+    database_path: "reminders.sqlite3"

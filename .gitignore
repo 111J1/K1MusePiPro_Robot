@@ -1,0 +1,72 @@
+# Build artifacts
+build/
+install/
+log/
+*.o
+*.obj
+*.elf
+*.hex
+*.bin
+*.axf
+*.map
+*.a
+*.so
+*.dll
+*.exe
+*.out
+*.app
+
+# ROS2 / colcon
+**/build/
+**/install/
+**/log/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+CTestTestfile.cmake
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.eggs/
+dist/
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+local.properties
+.gradle/
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# MATLAB temp files
+*.part
+*.asv
+
+# AI SDK (not ours to redistribute)
+AI_SDK/
+**/AI_SDK/
+
+# Git
+*.orig
+
+# OS files
+Desktop.ini

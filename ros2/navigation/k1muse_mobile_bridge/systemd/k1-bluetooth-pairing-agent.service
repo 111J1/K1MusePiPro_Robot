@@ -1,0 +1,13 @@
+[Unit]
+Description=K1 Bluetooth phone-only pairing agent
+After=bluetooth.service realtek-bt.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/bianbu/k1muse_communicate_ros/install/k1muse_mobile_bridge/lib/k1muse_mobile_bridge/bluetooth_pairing_agent.py --discoverable
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

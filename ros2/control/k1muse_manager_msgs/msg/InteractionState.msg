@@ -1,0 +1,21 @@
+uint8 STATE_BOOT=0
+uint8 STATE_IDLE=1
+uint8 STATE_WAKE_ACK=2
+uint8 STATE_LISTENING=3
+uint8 STATE_INTENT_PROCESSING=4
+uint8 STATE_TTS_RUNNING=5
+uint8 STATE_TARGETING=6
+uint8 STATE_EMERGENCY_OR_FAULT=7
+
+std_msgs/Header header
+string trace_id
+uint64 epoch
+uint8 state
+string state_name
+bool wakeword_enabled
+bool vision_enabled
+bool vad_asr_enabled
+bool tts_enabled
+string active_request_id
+string active_utterance_id
+string reason

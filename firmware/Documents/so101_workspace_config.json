@@ -1,0 +1,44 @@
+{
+  "units": {
+    "length": "meter",
+    "angle": "radian"
+  },
+  "source": {
+    "generator": "Tools/sample_so101_workspace.py",
+    "urdf": "D:/EDC_work/so1o1_arm_matlab/so101_new_calib.urdf",
+    "sample_count": 50000
+  },
+  "arm_workspace": {
+    "description": "5%-95% sampled FK percentile bounds. Use as broad reachability fallback.",
+    "x_min": -0.099784,
+    "x_max": 0.346764,
+    "y_min": -0.301331,
+    "y_max": 0.29945,
+    "z_min": -0.126159,
+    "z_max": 0.478462,
+    "r_min": 0.0,
+    "r_max": 1000.0
+  },
+  "preferred_grasp": {
+    "x": 0.135531,
+    "y": 0.0,
+    "z": 0.181608
+  },
+  "front_grasp_workspace": {
+    "description": "Practical first-pass grasp window filtered from x > 0.08 m and |y| < 0.16 m, narrowed to 10%-90% percentiles.",
+    "x_min": 0.099247,
+    "x_max": 0.364979,
+    "y_min": -0.123164,
+    "y_max": 0.122872,
+    "z_min": -0.10552,
+    "z_max": 0.440926,
+    "r_min": 0.106255,
+    "r_max": 0.413633
+  },
+  "front_preferred_grasp": {
+    "x": 0.201741,
+    "y": 0.0,
+    "z": 0.154404,
+    "r": 0.221362
+  }
+}

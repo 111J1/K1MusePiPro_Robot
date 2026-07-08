@@ -1,0 +1,31 @@
+std_msgs/Header header
+string trace_id
+string request_id
+string task_id
+uint64 epoch
+string task_type
+string target_class
+string target_id
+float32 target_z
+float32 place_z
+bool hold
+builtin_interfaces/Duration timeout
+---
+std_msgs/Header header
+string trace_id
+string request_id
+string task_id
+uint64 epoch
+bool success
+uint8 final_state
+string reason
+---
+std_msgs/Header header
+string trace_id
+string request_id
+string task_id
+uint64 epoch
+uint8 state
+string state_name
+float32 progress
+string detail

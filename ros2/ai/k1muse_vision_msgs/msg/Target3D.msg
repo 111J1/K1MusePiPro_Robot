@@ -1,0 +1,11 @@
+std_msgs/Header header
+string request_id
+string trace_id
+uint64 epoch
+string target_id
+float32 x
+float32 y
+float32 z
+float32 depth
+bool valid
+string reason

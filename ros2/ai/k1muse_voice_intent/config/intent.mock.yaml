@@ -1,0 +1,17 @@
+intent_node:
+  ros__parameters:
+    allow_fast_intent: true
+    llm_fallback_enabled: true
+    complex_text_chars: 10  # Deprecated compatibility value; explicit fast_* policy is authoritative.
+    max_tts_chars: 200
+    fast_stop_max_chars: 999
+    fast_simple_action_max_chars: 8
+    fast_query_chat_max_chars: 12
+    fast_extractive_find_max_chars: 32
+    fast_extractive_reminder_max_chars: 48
+    fast_allow_safe_fallback_after_llm_invalid: true
+    busy_policy: "reject"  # or "replace"
+
+    llm_use_response_format: false
+    llm_response_format_mode: "none"
+    llm_response_schema_strict: true

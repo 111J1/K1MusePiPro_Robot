@@ -1,0 +1,9 @@
+std_msgs/Header header
+string trace_id
+string utterance_id
+uint64 epoch
+bool success
+string text
+float32 confidence
+string language
+string reason

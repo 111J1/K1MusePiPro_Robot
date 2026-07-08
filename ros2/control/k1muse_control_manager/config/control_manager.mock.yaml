@@ -1,0 +1,5 @@
+control_manager_node:
+  ros__parameters:
+    backend: mock
+    mock_delay_ms: 500
+    find_timeout_ms: 5000

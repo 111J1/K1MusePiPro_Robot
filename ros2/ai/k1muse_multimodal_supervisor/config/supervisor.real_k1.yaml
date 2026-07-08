@@ -1,0 +1,5 @@
+multimodal_supervisor:
+  ros__parameters:
+    no_speech_timeout_sec: 10.0
+    wake_ack_preset: "wake_ack"
+    target_cache_ttl_ms: 500

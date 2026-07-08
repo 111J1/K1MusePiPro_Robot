@@ -1,0 +1,36 @@
+ai_runtime:
+  ros__parameters:
+    backend_mode: mock
+    guarded_queue_capacity: 16
+    cpu_queue_capacity: 16
+    job_deadline_ms: 3000
+    stop_timeout_ms: 1000
+    mock_warmup_delay_ms: 0
+    mock_warmup_failure: false
+    wakeword_provider: cpu
+    vad_provider: cpu
+    asr_provider: ep
+    vision_provider: ep
+    tts_provider: cpu
+    spacemit_ep_intra_threads: 2
+    spacemit_ep_inter_threads: 1
+
+    wakeword_threshold: 0.25
+    wakeword_trigger_sample_value: 32767
+
+    vad_threshold: 0.5
+    min_speech_ms: 250
+    end_silence_ms: 500
+    pre_roll_ms: 300
+    post_pad_ms: 150
+    max_utterance_ms: 10000
+
+    mock_asr_text: "mock transcription"
+
+    mock_vision_detection_count: 1
+    mock_vision_detection_class: "object"
+    mock_vision_detection_score: 0.9
+
+    mock_tts_sample_rate: 16000
+    mock_tts_duration_ms: 500
+    mock_tts_channels: 1

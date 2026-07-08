@@ -1,0 +1,9 @@
+vision_3d:
+  ros__parameters:
+    depth_roi_window_px: 5
+    depth_min_m: 0.1
+    depth_max_m: 10.0
+    frame_ttl_ms: 500.0
+    target_frame: "base_link"
+    camera_frame_fallback: "depth_camera_optical_frame"
+    tf_timeout_ms: 100.0

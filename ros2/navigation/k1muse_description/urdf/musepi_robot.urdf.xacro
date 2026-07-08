@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<!--
+  K1 MUSE Pi Pro — X-omni 全向轮底盘 URDF
+  数据来源：项目机械外参和雷达旋向约定
+  约定：REP-103 (+X 前 / +Y 左 / +Z 上 / yaw CCW)
+
+  TF 链：
+    base_footprint (root, 地面投影)
+      └── base_link              z=0.07825   车体几何中心
+          ├── base_laser         x=0.164284 z=0.084   LD06 发射面，yaw=0（驱动 laser_scan_dir=true 已翻 CCW）
+          ├── imu_link           x=0.164284 z=0.016   USB IMU 与车体同系
+          └── lift_base_link
+              └── lift_stage_link           prismatic z
+                  ├── depth_camera_link      随升降台运动，朝向 +X
+                  └── so101_base_link       SO101 机械臂挂载根
+
+  Visual 只为 rviz 可视化，不参与 SLAM/Nav 计算。
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="k1muse_robot">
+  <xacro:include filename="$(find k1muse_description)/urdf/lift_stage.xacro"/>
+  <xacro:include filename="$(find k1muse_description)/urdf/so101_arm.xacro"/>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       参数（外参 / 几何尺寸）
+       ═══════════════════════════════════════════════════════════════════ -->
+  <!-- 车体几何中心相对地面 -->
+  <xacro:property name="H_base"         value="0.07825"/>
+
+  <!-- 雷达位姿（相对 base_link） -->
+  <xacro:property name="laser_x"        value="0.164284"/>
+  <xacro:property name="laser_y"        value="0.0"/>
+  <xacro:property name="laser_z"        value="0.084"/>
+
+  <!-- IMU 位姿（相对 base_link） -->
+  <xacro:property name="imu_x"          value="0.164284"/>
+  <xacro:property name="imu_y"          value="0.0"/>
+  <xacro:property name="imu_z"          value="0.016"/>
+
+  <!-- Footprint 几何：中心到顶点 0.28 m，顶点 (±0.198, ±0.198) -->
+  <xacro:property name="body_half_edge" value="0.198"/>
+  <xacro:property name="body_height"    value="0.10"/>
+
+  <!-- 升降/机械臂实测外参，来源：k1muse_upper_control/k1muse_control_manager/config/grasp_profiles.yaml -->
+  <xacro:property name="lift_mount_x" value="0.0"/>
+  <xacro:property name="lift_mount_y" value="0.0"/>
+  <xacro:property name="lift_mount_z" value="${body_height / 2}"/>
+  <xacro:property name="lift_z_min" value="0.0"/>
+  <!-- URDF joint limit follows the lower-computer calibrated mechanical/software capability.
+       Task/demo policy may still choose the more conservative lift_z_demo_safe_max. -->
+  <xacro:property name="lift_z_max" value="0.50"/>
+  <xacro:property name="lift_z_demo_safe_max" value="0.45"/>
+  <xacro:property name="lift_velocity" value="0.05"/>
+  <xacro:property name="lift_column_height" value="0.50"/>
+  <xacro:property name="lift_column_size" value="0.035"/>
+  <xacro:property name="lift_stage_size_x" value="0.12"/>
+  <xacro:property name="lift_stage_size_y" value="0.12"/>
+  <xacro:property name="lift_stage_size_z" value="0.02"/>
+  <xacro:property name="arm_mount_x" value="0.030406"/>
+  <xacro:property name="arm_mount_y" value="0.0"/>
+  <xacro:property name="arm_base_z_at_lift_zero" value="0.222"/>
+  <xacro:property name="arm_mount_z" value="${arm_base_z_at_lift_zero - H_base - lift_mount_z}"/>
+
+  <!-- 深度相机原点外参：
+       - depth_camera_link uses robot axes: +X forward, +Y left, +Z up.
+       - depth_camera_mount_x is the calibrated camera-origin offset from the
+         chassis/lift reference along robot +X.
+       - depth_camera_mount_y is intentionally 0: no measured lateral offset.
+       - depth_camera_mount_z is intentionally 0: vertical camera-origin offset
+         is provided by the dynamic lift_joint position at runtime.
+
+       For an optical-frame point P_opt = (x_opt, y_opt, z_opt), where:
+         x_opt = image right, y_opt = image down, z_opt = camera forward,
+       robot-frame coordinates before any chassis/world transform are:
+         x_base = depth_camera_mount_x + z_opt
+         y_base = -x_opt
+         z_base = lift_joint_position - y_opt
+       This is implemented through the TF chain:
+         base_link -> lift_base_link -> lift_stage_link
+           -> depth_camera_link -> depth_camera_optical_frame
+  -->
+  <xacro:property name="depth_camera_mount_x" value="0.140406"/>
+  <xacro:property name="depth_camera_mount_y" value="0.0"/>
+  <xacro:property name="depth_camera_mount_z" value="0.0"/>
+  <xacro:property name="depth_camera_mount_roll" value="0.0"/>
+  <xacro:property name="depth_camera_mount_pitch" value="0.0"/>
+  <xacro:property name="depth_camera_mount_yaw" value="0.0"/>
+  <xacro:property name="depth_camera_size_x" value="0.025"/>
+  <xacro:property name="depth_camera_size_y" value="0.090"/>
+  <xacro:property name="depth_camera_size_z" value="0.025"/>
+
+  <!-- 颜色 -->
+  <material name="grey">    <color rgba="0.4 0.4 0.4 0.7"/>   </material>
+  <material name="black">   <color rgba="0.1 0.1 0.1 0.9"/>   </material>
+  <material name="red">     <color rgba="0.8 0.1 0.1 0.9"/>   </material>
+  <material name="blue">    <color rgba="0.1 0.3 0.8 0.9"/>   </material>
+  <material name="green">   <color rgba="0.1 0.7 0.3 0.9"/>   </material>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       Links
+       ═══════════════════════════════════════════════════════════════════ -->
+
+  <!-- base_footprint：地面投影，纯逻辑帧，无 visual / inertia -->
+  <link name="base_footprint"/>
+
+  <!-- base_link：车体几何中心。visual 给一个方盒近似车体外形 -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${2 * body_half_edge} ${2 * body_half_edge} ${body_height}"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${2 * body_half_edge} ${2 * body_half_edge} ${body_height}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- base_laser：LD06 圆柱 visual，自身坐标系 yaw=0（驱动已翻 CCW） -->
+  <link name="base_laser">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.0185" length="0.04"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <visual>
+      <!-- 0 度方向小标记，确认朝向用 -->
+      <origin xyz="0.02 0 0.022" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.005 0.002"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <!-- imu_link：小方块 visual -->
+  <link name="imu_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.025 0.020 0.008"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       Joints — 全部 fixed（静态 TF）
+       ═══════════════════════════════════════════════════════════════════ -->
+
+  <joint name="base_footprint_to_base_link" type="fixed">
+    <parent link="base_footprint"/>
+    <child  link="base_link"/>
+    <origin xyz="0 0 ${H_base}" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_link_to_base_laser" type="fixed">
+    <parent link="base_link"/>
+    <child  link="base_laser"/>
+    <origin xyz="${laser_x} ${laser_y} ${laser_z}" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_link_to_imu_link" type="fixed">
+    <parent link="base_link"/>
+    <child  link="imu_link"/>
+    <origin xyz="${imu_x} ${imu_y} ${imu_z}" rpy="0 0 0"/>
+  </joint>
+
+  <xacro:k1muse_lift_stage
+    prefix="lift_"
+    parent="base_link"
+    z_min="${lift_z_min}"
+    z_max="${lift_z_max}"
+    velocity="${lift_velocity}"
+    column_height="${lift_column_height}"
+    column_size="${lift_column_size}"
+    stage_size_x="${lift_stage_size_x}"
+    stage_size_y="${lift_stage_size_y}"
+    stage_size_z="${lift_stage_size_z}">
+    <origin xyz="${lift_mount_x} ${lift_mount_y} ${lift_mount_z}" rpy="0 0 0"/>
+  </xacro:k1muse_lift_stage>
+
+  <link name="depth_camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${depth_camera_size_x} ${depth_camera_size_y} ${depth_camera_size_z}"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+
+  <link name="depth_camera_optical_frame"/>
+
+  <!-- Fixed camera-origin offset on the moving lift stage. The lift height is
+       not baked into this joint; robot_state_publisher receives it from
+       /joint_states name=lift_joint, position=current_lift_z. -->
+  <joint name="lift_stage_to_depth_camera" type="fixed">
+    <parent link="lift_stage_link"/>
+    <child link="depth_camera_link"/>
+    <origin
+      xyz="${depth_camera_mount_x} ${depth_camera_mount_y} ${depth_camera_mount_z}"
+      rpy="${depth_camera_mount_roll} ${depth_camera_mount_pitch} ${depth_camera_mount_yaw}"/>
+  </joint>
+
+  <!-- ROS optical frame conversion:
+       depth_camera_link axes: +X forward, +Y left, +Z up.
+       depth_camera_optical_frame axes: +X image-right, +Y image-down, +Z forward.
+       Therefore a point maps as:
+         X_link = Z_optical
+         Y_link = -X_optical
+         Z_link = -Y_optical
+  -->
+  <joint name="depth_camera_to_optical_frame" type="fixed">
+    <parent link="depth_camera_link"/>
+    <child link="depth_camera_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-1.57079632679 0 -1.57079632679"/>
+  </joint>
+
+  <xacro:so101_arm prefix="so101_" parent="lift_stage_link">
+    <origin xyz="${arm_mount_x} ${arm_mount_y} ${arm_mount_z}" rpy="0 0 0"/>
+  </xacro:so101_arm>
+
+</robot>

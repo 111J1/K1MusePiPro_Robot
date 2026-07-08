@@ -1,0 +1,36 @@
+control_manager_node:
+  ros__parameters:
+    backend: stm32_uart
+    execution_policy: demo_tolerant
+
+    serial:
+      port: /dev/ttyS2
+      baud_rate: 115200
+      source: host
+      read_timeout_ms: 20
+      result_timeout_ms: 15000
+
+    profiles:
+      grasp_profiles: grasp_profiles.yaml
+
+    tf:
+      publish_lift_joint_state: true
+      lift_joint_name: lift_joint
+      lift_joint_state_period_ms: 50
+
+    tolerances:
+      arm_pose_xyz_tolerance_m: 0.015
+      lift_z_tolerance_m: 0.02
+      gripper_tolerance_rad: 0.05
+
+    gripper:
+      result_timeout_ms: 1000
+      assume_success_without_fault: true
+
+    readiness:
+      arm_ready_states: [3, 5, 6]
+      lift_rehome_on_fault: true
+
+    safety:
+      stop_all_on_cancel: true
+      stop_all_on_exception: true

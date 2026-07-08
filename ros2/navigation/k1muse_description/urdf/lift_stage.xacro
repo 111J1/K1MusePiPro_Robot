@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="k1muse_lift_stage" params="prefix parent z_min z_max velocity column_height column_size stage_size_x stage_size_y stage_size_z *origin">
+    <joint name="${prefix}mount_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}base_link"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+
+    <link name="${prefix}base_link">
+      <visual>
+        <origin xyz="0 0 ${column_height / 2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${column_size} ${column_size} ${column_height}"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+    </link>
+
+    <link name="${prefix}stage_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${stage_size_x} ${stage_size_y} ${stage_size_z}"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+    </link>
+
+    <joint name="${prefix}joint" type="prismatic">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}stage_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${z_min}" upper="${z_max}" effort="100" velocity="${velocity}"/>
+    </joint>
+  </xacro:macro>
+</robot>

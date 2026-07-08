@@ -1,0 +1,48 @@
+ai_runtime:
+  ros__parameters:
+    # Backend mode
+    backend_mode: "real"
+
+    # SpacemiT EP configuration
+    spacemit_ep_intra_threads: 2
+    spacemit_ep_inter_threads: 1
+
+    # Wakeword (sherpa-onnx KWS)
+    wakeword_provider: "cpu"
+    sherpa_kws_model_path: "/home/bianbu/AI_SDK/sherpa/models/kws-current"
+    sherpa_kws_keywords_path: "/home/bianbu/AI_SDK/sherpa/config/k1muse_keywords.txt"
+    wakeword_threshold: 0.25
+
+    # VAD (SpacemiT AI SDK VAD)
+    vad_provider: "cpu"
+    vad_model_path: "/home/bianbu/.cache/models/vad/silero"
+    vad_threshold: 0.5
+    vad_window_samples: 512
+    min_speech_ms: 250
+    end_silence_ms: 500
+    pre_roll_ms: 300
+    post_pad_ms: 150
+    max_utterance_ms: 10000
+
+    # ASR (SpacemiT AI SDK SenseVoice)
+    asr_provider: "ep"
+    sensevoice_asr_model_path: "/home/bianbu/.cache/models/asr/sensevoice"
+    asr_timeout_ms: 30000
+
+    # Vision (SpacemiT Vision SDK YOLOv8)
+    vision_provider: "ep"
+    vision_model_path: "/home/bianbu/.cache/models/vision/yolov8/yolov8n_320x320.q.onnx"
+    vision_config_path: "/home/bianbu/.cache/models/vision/yolov8/yolov8n.yaml"
+
+    # TTS (SpacemiT AI SDK Matcha)
+    tts_provider: "cpu"  # CPU primary for main acceptance
+    tts_model_path: "/home/bianbu/.cache/models/tts/matcha-tts"
+
+    # Provider fallback
+    provider_fallback: "disabled"  # No silent fallback
+
+    # Queue and timeout
+    guarded_queue_capacity: 16
+    cpu_queue_capacity: 16
+    job_deadline_ms: 60000       # 60 s — real SDK model loading can take 10-30 s
+    stop_timeout_ms: 5000        # 5 s for worker stop during error handling

@@ -1,0 +1,16 @@
+[Unit]
+Description=K1 mobile Bluetooth supervisor
+After=bluetooth.service realtek-bt.service k1-bluetooth-pairing-agent.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/bianbu/k1muse_communicate_ros/install/k1muse_mobile_bridge/lib/k1muse_mobile_bridge/mobile_supervisor.py
+Restart=always
+RestartSec=2
+KillMode=control-group
+TimeoutStopSec=8
+SendSIGKILL=yes
+
+[Install]
+WantedBy=multi-user.target

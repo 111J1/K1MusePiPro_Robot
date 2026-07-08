@@ -1,0 +1,24 @@
+---
+# Style aligned with current project source formatting (for example pid.c).
+BasedOnStyle: LLVM
+
+# Keep current project readability and avoid aggressive reflow on legacy comments.
+IndentWidth: 4
+ContinuationIndentWidth: 4
+TabWidth: 4
+UseTab: Never
+
+ColumnLimit: 0
+BreakBeforeBraces: Linux
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+
+SortIncludes: false
+IndentCaseLabels: false
+SpaceBeforeParens: ControlStatements
+PointerAlignment: Right
+ReflowComments: false
+AlignTrailingComments: true
+
+Standard: Latest

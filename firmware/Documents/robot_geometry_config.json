@@ -1,0 +1,31 @@
+{
+  "units": {
+    "length": "meter",
+    "angle": "radian"
+  },
+  "frames": {
+    "chassis": {
+      "origin": "chassis_center",
+      "x_axis": "forward",
+      "y_axis": "left",
+      "z_axis": "up"
+    },
+    "arm_base": {
+      "aligned_with_chassis": true
+    }
+  },
+  "mount": {
+    "arm_base_offset_x_c": 0.030406,
+    "arm_base_offset_y_c": 0.0,
+    "arm_base_z_at_lift_zero": 0.222,
+    "arm_base_yaw_c": 0.0
+  },
+  "lift": {
+    "z_min": 0.0,
+    "z_max": 0.5,
+    "positive_direction": "up"
+  },
+  "workspace_config": {
+    "file": "so101_workspace_config.json"
+  }
+}

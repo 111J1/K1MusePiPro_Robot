@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>k1muse_voice_intent</name>
+  <version>0.1.0</version>
+  <description>Voice intent routing with IntentNode ROS node, fast_intent + LLM fallback (mock or real llama-server client).</description>
+  <maintainer email="maintainer@example.com">K1MUSE Maintainer</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>k1muse_common</depend>
+  <depend>k1muse_voice_msgs</depend>
+  <test_depend>ament_cmake_gtest</test_depend>
+  <!--
+    Optional dependencies for real LLM client (llama-server):
+      - libcurl-dev
+      - nlohmann-json3-dev
+    Enabled only when -DK1MUSE_ENABLE_REAL_LLM_CLIENT=ON.
+    Mock-only builds do not require these.
+  -->
+  <export><build_type>ament_cmake</build_type></export>
+</package>

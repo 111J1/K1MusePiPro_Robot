@@ -1,0 +1,14 @@
+# EnableDetector.srv
+# 启用/禁用检测器
+
+# 检测器名称: "yolov8n", "pose", "fire"
+string detector_name
+
+# 是否启用
+bool enable
+---
+# 是否成功
+bool success
+
+# 结果消息
+string message

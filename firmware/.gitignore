@@ -1,0 +1,57 @@
+# =========================
+# OS and editor temporary files
+# =========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# =========================
+# Generic logs and temporary outputs
+# =========================
+*.log
+*.tmp
+*.plist
+
+# =========================
+# STM32CubeMX backup artifacts
+# =========================
+*.bak
+**/Backup/
+
+# =========================
+# Keil MDK user-specific files
+# =========================
+*.uvoptx
+*.uvguix.*
+*.uvgui.*
+
+# =========================
+# Build artifacts (Keil/GCC/ARM toolchains)
+# =========================
+*.o
+*.obj
+*.d
+*.dep
+*.lst
+*.map
+*.axf
+*.elf
+*.hex
+*.bin
+*.lnp
+*.htm
+
+# =========================
+# Project-local generated directories
+# =========================
+MDK-ARM/EmbodiedAI_Robot/
+MDK-ARM/out/
+MDK-ARM/tmp/
+MDK-ARM/.clangd
+MDK-ARM/EmbodiedAI_Robot.cbuild-idx.yml
+MDK-ARM/JLinkLog.txt
+MDK-ARM/JLinkSettings.ini
+MDK-ARM/RTE/_EmbodiedAI_Robot/
+

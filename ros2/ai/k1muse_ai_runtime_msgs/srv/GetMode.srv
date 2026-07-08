@@ -1,0 +1,11 @@
+# GetMode.srv
+# 获取当前模式
+---
+# 当前模式名称
+string current_mode
+
+# 当前活跃的检测器
+string[] active_detectors
+
+# 当前活跃的管线
+string[] active_pipelines

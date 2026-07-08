@@ -1,0 +1,9 @@
+std_msgs/Header header
+string request_id
+string trace_id
+uint64 epoch
+bool found
+string target_id
+string target_class
+float32 score
+string reason

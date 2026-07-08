@@ -1,0 +1,46 @@
+# Detector registry configuration (structured YAML, schema_version=1).
+# Loaded by AiRuntimeNode::on_configure() when vision mode != mock.
+#
+# See docs/architecture_review/K1_MODEL_CONSTRAINTS.md for model details.
+
+schema_version: 1
+
+detectors:
+  - name: "yolov8n"
+    type: "object_detection"
+    backend: "mock"                    # "mock" | "real"
+    model_path: "~/.cache/models/vision/yolov8/yolov8n_no_dfl.q.onnx"
+    config_path: "~/.cache/models/vision/yolov8/yolov8n.yaml"
+    label_path: "~/.cache/models/vision/yolov8/labels.txt"
+    input_width: 640
+    input_height: 640
+    provider: "ep"
+    interval_ms: 500
+    requires_ep: true
+    enabled: true
+
+  - name: "yolov8n-pose"
+    type: "pose_estimation"
+    backend: "mock"
+    model_path: "~/.cache/models/vision/yolov8_pose/yolov8n-pose.q.onnx"
+    config_path: "~/.cache/models/vision/yolov8_pose/yolov8n-pose.yaml"
+    label_path: ""
+    input_width: 640
+    input_height: 640
+    provider: "ep"
+    interval_ms: 500
+    requires_ep: true
+    enabled: true
+
+  - name: "yolov8_fire"
+    type: "fire_detection"
+    backend: "mock"
+    model_path: "~/.cache/models/vision/yolov8/yolov8_fire.q.onnx"
+    config_path: "~/.cache/models/vision/yolov8/yolov8_fire.yaml"
+    label_path: "~/.cache/models/vision/yolov8/fire_labels.txt"
+    input_width: 640
+    input_height: 640
+    provider: "ep"
+    interval_ms: 500
+    requires_ep: true
+    enabled: true

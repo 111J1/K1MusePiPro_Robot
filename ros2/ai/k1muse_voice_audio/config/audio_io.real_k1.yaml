@@ -1,0 +1,18 @@
+audio_io:
+  ros__parameters:
+    # Audio backend: "mock", "alsa", or "portaudio"
+    device_type: "alsa"
+
+    # Capture (same ALSA device, configured explicitly - no auto-discovery)
+    capture_device: "plughw:2,0"
+    capture_sample_rate: 16000
+    capture_channels: 1
+    capture_frame_ms: 20
+    capture_buffer_ms: 400
+
+    # Playback (same ALSA device, configured explicitly - no auto-discovery)
+    playback_device: "plughw:2,0"
+    preset_wake_ack_path: "/home/bianbu/.cache/assets/audio/wozai.wav"
+
+    # Preset durations (mock mode only, ignored on real K1)
+    preset_wake_ack_ms: 500

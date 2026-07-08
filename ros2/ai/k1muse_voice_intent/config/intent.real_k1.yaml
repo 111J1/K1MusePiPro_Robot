@@ -1,0 +1,68 @@
+intent_node:
+  ros__parameters:
+    # ── Router config ──
+    allow_fast_intent: true
+    llm_fallback_enabled: true
+    complex_text_chars: 10  # Deprecated compatibility value; explicit fast_* policy is authoritative.
+    max_tts_chars: 200
+    fast_stop_max_chars: 999
+    fast_simple_action_max_chars: 8
+    fast_query_chat_max_chars: 12
+    fast_extractive_find_max_chars: 32
+    fast_extractive_reminder_max_chars: 48
+    fast_allow_safe_fallback_after_llm_invalid: true
+    busy_policy: "reject"
+
+    # ── LLM backend selection ──
+    llm_backend: "real"
+
+    # ── Client config (llama-server) ──
+    llm_api_base: "http://127.0.0.1:8080/v1"
+    llm_model: "qwen2.5-0.5b"
+    llm_connect_timeout_ms: 500
+    llm_request_timeout_ms: 15000
+    llm_low_speed_timeout_ms: 15000
+    llm_health_interval_ms: 500
+    llm_health_startup_timeout_ms: 120000
+    llm_max_tokens: 96
+    llm_temperature: 0.0
+    llm_top_p: 0.3
+    llm_top_k: 1
+    llm_cache_prompt: true
+    # Keep disabled until board curl proves SpacemiT llama-server accepts it.
+    llm_use_response_format: false
+    llm_response_format_mode: "none"  # none | json_schema | json_object
+    llm_response_schema_strict: true
+    llm_max_response_bytes: 65536
+    llm_warmup_required: true
+
+    # ── System prompt (overrides header default) ──
+    llm_system_prompt: >
+      你是 K1 机器人意图分类器。只输出一行 JSON，不输出解释。
+      格式固定：{"kind":"","direction":"","target":"","reply":""}
+
+      kind 只能是：move, stop, rotate, lift, find, query_introduce,
+      query_time, reminder_create, reminder_list, system_shutdown,
+      system_reboot, chat, ask_repeat, unknown。
+
+      规则：
+      - 前进/后退/左转/右转 => move，direction 填 forward/backward/left/right。
+      - 停下/别动/不要动/急停 => stop。
+      - 升高/降低 => lift，direction 填 up/down。
+      - 找/搜索/帮我拿/拿过来 => find，target 填物体名；不要输出 move。
+      - 你是谁/你能做什么/你会什么 => query_introduce。
+      - 你好/谢谢/再见/辛苦了 => chat。
+      - 提醒我/记得叫我/设置提醒 => reminder_create，target 填完整提醒内容；内容为空则 ask_repeat。
+      - 查看提醒/提醒列表 => reminder_list。
+      - 不确定或无法执行 => unknown。
+      - reply 必须是简短中文，不能空。
+
+      示例：
+      用户：你能做什么
+      {"kind":"query_introduce","direction":"","target":"","reply":"我可以移动、找东西、回答问题和设置提醒。"}
+      用户：帮我把杯子拿过来
+      {"kind":"find","direction":"","target":"杯子","reply":"好的，我先帮你找杯子。"}
+      用户：不要动
+      {"kind":"stop","direction":"","target":"","reply":"已停止。"}
+      用户：三分钟后提醒我关火
+      {"kind":"reminder_create","direction":"","target":"三分钟后关火","reply":"好的，我会提醒你。"}
