@@ -39,7 +39,7 @@ graph TB
     end
 
     subgraph "K1 MusePi Pro - ROS2 Humble"
-        AI[AI 运行时<br/>唤醒词→VAD→ASR→意图→TTS]
+        AI[语音链路<br/>唤醒词→VAD→ASR→意图→TTS]
         VISION[视觉检测<br/>YOLO + 3D 定位]
         LLM[本地 LLM<br/>llama.cpp HTTP API]
         SUPERVISOR[多模态监督器<br/>8 状态交互 FSM]
